@@ -1,50 +1,395 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Резюме Unity Developer</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Имя Фамилия — Unity Developer</title>
+  <meta name="description" content="Резюме Unity-разработчика: проекты, гифки механик, опыт, контакты."/>
+  <style>
+    :root{
+      --bg: #0b1020;
+      --txt: #e6e9f2;
+      --muted: #a9b0c1;
+      --card: rgba(255,255,255,0.06);
+      --card-border: rgba(255,255,255,0.12);
+      --accent: #7cdaff;
+      --accent2: #9b8cff;
+      --glass: rgba(255,255,255,0.08);
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --radius: 18px;
+      --radius-lg: 26px;
+      --maxw: 1080px;
+    }
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#f6f7fb; --txt:#0e1220; --muted:#4b4f5d; --card:rgba(0,0,0,0.04); --card-border:rgba(0,0,0,0.08); --glass:rgba(255,255,255,0.7);} 
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font: 16px/1.6 Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--txt); background:radial-gradient(1200px 600px at 20% -10%, #1a2348 20%, transparent 60%), radial-gradient(1000px 600px at 100% 10%, #1a3a48 10%, transparent 60%), var(--bg);
+      overflow-x:hidden;
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:0 20px}
+
+    /* Floating gradient blobs */
+    .blob{position:fixed; inset:auto; width:500px; height:500px; border-radius:999px; filter: blur(80px); opacity:0.5; pointer-events:none; z-index:-1;}
+    .blob.one{background: conic-gradient(from 0deg, #5ddcff, #3c67e3, #4e00c2); left:-140px; top:-120px; animation:float 22s ease-in-out infinite}
+    .blob.two{background: conic-gradient(from 180deg, #ff9a9e, #fad0c4, #a18cd1); right:-160px; top:240px; animation:float 28s ease-in-out infinite reverse}
+    .blob.three{background: conic-gradient(from 90deg, #00c6ff, #0072ff, #00ffef); left:40%; bottom:-220px; animation:float 36s ease-in-out infinite}
+    @keyframes float{ 0%{transform:translate3d(0,0,0)} 50%{transform:translate3d(0,-40px,0)} 100%{transform:translate3d(0,0,0)} }
+
+    /* Sticky glass navbar */
+    .nav{position:sticky; top:0; z-index:20; backdrop-filter:saturate(150%) blur(10px); background:linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.15)); border-bottom:1px solid var(--card-border)}
+    .nav .wrap{display:flex; gap:14px; align-items:center; justify-content:space-between; padding:12px 20px}
+    .brand{display:flex; gap:10px; align-items:center}
+    .logo{width:32px; height:32px; border-radius:10px; background:linear-gradient(135deg, var(--accent), var(--accent2)); box-shadow:0 6px 16px rgba(124,218,255,0.4)}
+    .nav a{color:var(--txt); opacity:0.9}
+    .navlinks{display:flex; gap:18px; align-items:center}
+    .pill{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border:1px solid var(--card-border); background:var(--glass); border-radius:999px; transition:transform .2s ease, box-shadow .2s ease}
+    .pill:hover{transform:translateY(-2px); box-shadow:var(--shadow)}
+
+    /* Hero */
+    .hero{position:relative; padding:90px 0 46px}
+    .hero .grid{display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:center}
+    .badge{display:inline-flex; gap:8px; align-items:center; background:var(--glass); border:1px solid var(--card-border); border-radius:999px; padding:8px 12px; font-size:13px; color:var(--muted)}
+    h1{font-size: clamp(32px, 5vw, 58px); line-height:1.05; margin:.6rem 0; letter-spacing:-0.02em}
+    .subtitle{color:var(--muted); font-size: clamp(16px, 2.2vw, 20px)}
+    .cta{display:flex; gap:14px; margin-top:22px; flex-wrap:wrap}
+    .btn{display:inline-flex; align-items:center; gap:10px; border-radius:999px; padding:12px 18px; border:1px solid var(--card-border); background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); box-shadow:inset 0 1px rgba(255,255,255,0.1); color:var(--txt); text-decoration:none; transition:transform .2s ease, box-shadow .2s ease}
+    .btn:hover{transform:translateY(-3px); box-shadow:0 12px 30px rgba(0,0,0,0.35)}
+    .btn.primary{background:linear-gradient(135deg, var(--accent), var(--accent2)); color:#0b1020; border:none}
+
+    .mock{position:relative; border-radius:var(--radius-lg); overflow:hidden; background:var(--card); border:1px solid var(--card-border); box-shadow:var(--shadow); transform:perspective(900px) rotateX(4deg) rotateY(-8deg); transition: transform .6s ease;}
+    .mock:hover{transform:perspective(900px) rotateX(0) rotateY(0)}
+    .mock img, .mock video{display:block; width:100%; height:auto}
+
+    /* Section */
+    section{padding:56px 0}
+    h2{font-size: clamp(22px,3.6vw,32px); margin:0 0 16px}
+    .muted{color:var(--muted)}
+
+    /* Chips & grids */
+    .chips{display:flex; flex-wrap:wrap; gap:10px}
+    .chip{padding:8px 12px; border-radius:999px; border:1px solid var(--card-border); background:var(--glass); font-size:13px; color:var(--muted)}
+
+    .grid{display:grid; gap:20px}
+    .grid.cols-3{grid-template-columns: repeat(3, minmax(0,1fr))}
+    .grid.cols-2{grid-template-columns: repeat(2, minmax(0,1fr))}
+    @media (max-width: 900px){ .hero .grid{grid-template-columns:1fr} .grid.cols-3{grid-template-columns:1fr 1fr} }
+    @media (max-width: 640px){ .grid.cols-3, .grid.cols-2{grid-template-columns:1fr} }
+
+    /* Card */
+    .card{position:relative; border-radius:var(--radius); border:1px solid var(--card-border); background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); overflow:hidden; box-shadow:var(--shadow); transform-style:preserve-3d; transition: transform .2s ease}
+    .card:hover{transform: translateY(-4px)}
+    .thumb{position:relative; aspect-ratio:16/9; overflow:hidden}
+    .thumb img, .thumb video{width:100%; height:100%; object-fit:cover; display:block}
+    .shine{position:absolute; inset:0; background: radial-gradient(600px 200px at var(--mx,50%) -20%, rgba(255,255,255,0.20), transparent 40%); mix-blend-mode:screen; pointer-events:none}
+    .content{padding:16px}
+    .title{font-weight:700; font-size:18px; margin:0 0 6px}
+    .desc{font-size:14px; color:var(--muted)}
+    .tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+    .tag{font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid var(--card-border); background:var(--glass)}
+    .actions{display:flex; gap:10px; margin-top:14px}
+
+    /* Timeline */
+    .timeline{position:relative; margin:20px 0; padding-left:24px}
+    .timeline:before{content:""; position:absolute; left:8px; top:0; bottom:0; width:2px; background:linear-gradient(180deg, var(--accent), transparent)}
+    .titem{position:relative; margin:18px 0; padding:12px 14px; border-radius:12px; border:1px solid var(--card-border); background:var(--glass)}
+    .titem:before{content:""; position:absolute; left:-6px; top:16px; width:12px; height:12px; border-radius:999px; background:linear-gradient(135deg,var(--accent),var(--accent2)); box-shadow:0 0 0 3px rgba(124,218,255,0.25)}
+
+    /* Footer */
+    footer{padding:40px 0 80px; color:var(--muted)}
+
+    /* Reveal */
+    .reveal{opacity:0; transform: translateY(16px); transition:opacity .6s ease, transform .6s ease}
+    .reveal.show{opacity:1; transform:none}
+
+    /* Lightbox */
+    .lightbox{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.7); z-index:100}
+    .lightbox.open{display:flex}
+    .lightbox .frame{max-width: min(1200px, 92vw); max-height: 86vh; border-radius:16px; overflow:hidden; border:1px solid var(--card-border); background: #000}
+    .lightbox video, .lightbox img{display:block; width:100%; height:100%; object-fit:contain}
+
+    /* Particles canvas overlay */
+    #stars{position:fixed; inset:0; z-index:-1; opacity:0.45}
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .btn:hover, .card:hover, .mock:hover{transform:none}
+      .blob{animation:none}
+      .reveal{transition:none}
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Иван Иванов</h1>
-    <p>Unity Developer | C# | Gameplay Programmer</p>
-    <a href="mailto:youremail@example.com">youremail@example.com</a> |
-    <a href="https://linkedin.com/in/username">LinkedIn</a> |
-    <a href="https://github.com/username">GitHub</a>
-  </header>
+    <canvas id="stars" aria-hidden="true"></canvas>
+    <div class="blob one"></div>
+    <div class="blob two"></div>
+    <div class="blob three"></div>
 
-  <section>
-    <h2>Навыки</h2>
-    <ul>
-      <li>C#, Unity (URP, ECS, Input System)</li>
-      <li>AI, мультиплеер (Netcode)</li>
-      <li>Оптимизация, профилинг</li>
-    </ul>
-  </section>
+    <!-- Nav -->
+    <nav class="nav">
+        <div class="wrap">
+            <div class="brand">
+                <div class="logo" aria-hidden="true"></div>
+                <strong>Имя Фамилия</strong>
+            </div>
+            <div class="navlinks">
+                <a class="pill" href="#projects">Проекты</a>
+                <a class="pill" href="#mechanics">Механики</a>
+                <a class="pill" href="#experience">Опыт</a>
+                <a class="pill" href="#contact">Контакты</a>
+            </div>
+        </div>
+    </nav>
 
-  <section>
-    <h2>Примеры проектов</h2>
+    <!-- Hero -->
+    <header class="hero">
+        <div class="wrap grid">
+            <div>
+                <div class="badge">Unity • C# • Gameplay • ECS/DOTS • Netcode</div>
+                <h1>Unity Developer<br />Gameplay, Tools, Performance</h1>
+                <p class="subtitle">Проектирую и реализую игровые механики, делаю прототипы быстро, полирую до 60+ FPS на железе среднего уровня. Опыт: шутеры, песочницы, мобилки.</p>
+                <div class="cta">
+                    <a class="btn primary" href="#projects">Смотреть проекты</a>
+                    <a class="btn" href="mailto:you@example.com" rel="nofollow">Написать</a>
+                    <a class="btn" href="https://github.com/username" target="_blank" rel="noopener">GitHub</a>
+                    <a class="btn" href="https://linkedin.com/in/username" target="_blank" rel="noopener">LinkedIn</a>
+                </div>
+                <div style="margin-top:18px" class="chips">
+                    <div class="chip">Input System</div>
+                    <div class="chip">URP</div>
+                    <div class="chip">Addressables</div>
+                    <div class="chip">Jobs/Burst</div>
+                    <div class="chip">Profiler</div>
+                </div>
+            </div>
+            <div class="mock reveal" data-reveal>
+                <!-- Замените src на ваш mp4/webm геймплей. Можно поставить постер-кадр в poster="projects/hero.jpg" -->
+                <video src="projects/hero.mp4" autoplay muted loop playsinline></video>
+            </div>
+        </div>
+    </header>
 
-    <div class="project">
-      <h3>Rogue-like Prototype</h3>
-      <img src="projects/roguelike.gif" alt="roguelike demo">
-      <p>Система процедурных комнат, инвентарь и AI врагов.</p>
-      <a href="https://github.com/username/roguelike">Исходники</a>
+    <!-- Projects -->
+    <section id="projects">
+        <div class="wrap">
+            <h2>Проекты</h2>
+            <p class="muted" style="margin-bottom:18px">Подборка прототипов и пет-проектов. В карточках гифка/видео, краткое описание, теги и ссылки.</p>
+            <div class="grid cols-3">
+                <!-- Project card template -->
+                <article class="card reveal" data-tilt data-reveal>
+                    <div class="thumb" data-lightbox="projects/roguelike.mp4">
+                        <video src="projects/roguelike.mp4" muted loop playsinline></video>
+                        <div class="shine"></div>
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Rogue-like Prototype</h3>
+                        <p class="desc">Процедурная генерация комнат, инвентарь, AI врагов, лут-семена. 60 FPS на средних девайсах.</p>
+                        <div class="tags">
+                            <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">ScriptableObjects</span>
+                        </div>
+                        <div class="actions">
+                            <a class="btn" href="https://github.com/username/roguelike" target="_blank" rel="noopener">Исходники</a>
+                            <a class="btn" href="#" onclick="openBox('projects/roguelike.mp4'); return false;">Видео</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card reveal" data-tilt data-reveal>
+                    <div class="thumb" data-lightbox="projects/physics.gif">
+                        <img src="projects/physics.gif" loading="lazy" alt="Physics sandbox" />
+                        <div class="shine"></div>
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Physics Sandbox</h3>
+                        <p class="desc">Joint’ы, перетаскивание, ограничители, кастомное затухание. Визуальные дебаг-оверлеи.</p>
+                        <div class="tags"><span class="tag">ConfigurableJoint</span><span class="tag">DOTween</span><span class="tag">Tools</span></div>
+                        <div class="actions">
+                            <a class="btn" href="https://github.com/username/physics-sandbox" target="_blank" rel="noopener">Исходники</a>
+                            <a class="btn" href="#" onclick="openBox('projects/physics.gif'); return false;">Гифка</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card reveal" data-tilt data-reveal>
+                    <div class="thumb" data-lightbox="projects/netcode.mp4">
+                        <video src="projects/netcode.mp4" muted loop playsinline></video>
+                        <div class="shine"></div>
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Coop Netcode Demo</h3>
+                        <p class="desc">Оружие, репликация позиций, предсказание, сглаживание. Тесты задержки.</p>
+                        <div class="tags"><span class="tag">Netcode</span><span class="tag">Prediction</span><span class="tag">LagComp</span></div>
+                        <div class="actions">
+                            <a class="btn" href="https://github.com/username/coop-demo" target="_blank" rel="noopener">Исходники</a>
+                            <a class="btn" href="#" onclick="openBox('projects/netcode.mp4'); return false;">Видео</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Add more cards as needed -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Mechanics gallery -->
+    <section id="mechanics">
+        <div class="wrap">
+            <h2>Механики</h2>
+            <p class="muted" style="margin-bottom:18px">Короткие гифки с конкретными техниками: инвентарь, взаимодействия, UI/UX, VFX.</p>
+            <div class="grid cols-3">
+                <article class="card reveal" data-reveal>
+                    <div class="thumb" data-lightbox="projects/inventory.gif">
+                        <img src="projects/inventory.gif" loading="lazy" alt="Inventory" />
+                        <div class="shine"></div>
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Инвентарь с Drag/Stack</h3>
+                        <p class="desc">Stack, split, hotbar, SO-конфиги.</p>
+                        <div class="tags"><span class="tag">UI Toolkit</span><span class="tag">Events</span></div>
+                    </div>
+                </article>
+                <article class="card reveal" data-reveal>
+                    <div class="thumb" data-lightbox="projects/doors.gif">
+                        <img src="projects/doors.gif" loading="lazy" alt="Doors" />
+                        <div class="shine"></div>
+                    </div>
+                    <div class="content">
+                        <h3 class="title">Двери и перетаскивание</h3>
+                        <p class="desc">Хинджи, демпфирование, снап к точке.</p>
+                        <div class="tags"><span class="tag">Physics</span><span class="tag">HingeJoint</span></div>
+                    </div>
+                </article>
+                <article class="card reveal" data-reveal>
+                    <div class="thumb" data-lightbox="projects/vfx.gif">
+                        <img src="projects/vfx.gif" loading="lazy" alt="VFX" />
+                        <div class="shine"></div>
+                    </div>
+                    <div class="content">
+                        <h3 class="title">VFX + Shader Graph</h3>
+                        <p class="desc">Dissolve, trails, hit flashes.</p>
+                        <div class="tags"><span class="tag">URP</span><span class="tag">Shaders</span></div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience
+    <section id="experience">
+        <div class="wrap">
+            <h2>Опыт</h2>
+            <div class="timeline reveal" data-reveal>
+                <div class="titem">
+                    <strong>Gameplay Programmer — XYZ Studio</strong> · 2023–2025
+                    <div class="muted">Геймплейные системы, оптимизация, инструменты дизайнеров.</div>
+                </div>
+                <div class="titem">
+                    <strong>Unity Developer — Freelance</strong> · 2021–2023
+                    <div class="muted">Прототипирование, интеграция SDK, публикации.</div>
+                </div>
+            </div>
+            <div class="chips" style="margin-top:14px">
+                <div class="chip">C#</div><div class="chip">Unity 6</div><div class="chip">ECS/DOTS</div><div class="chip">Jobs/Burst</div><div class="chip">Netcode</div><div class="chip">Addressables</div><div class="chip">Profiler</div>
+            </div>
+        </div>
+    </section>
+    -->
+
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="wrap">
+            <h2>Контакты</h2>
+            <div class="grid cols-2">
+                <div class="card" style="padding:18px">
+                    <p>Связаться со мной: <a href="mailto:you@example.com">you@example.com</a></p>
+                    <p>GitHub: <a href="https://github.com/username" target="_blank" rel="noopener">github.com/username</a></p>
+                    <p>LinkedIn: <a href="https://linkedin.com/in/username" target="_blank" rel="noopener">linkedin.com/in/username</a></p>
+                </div>
+                <div class="card" style="padding:18px">
+                    <p class="muted">Резюме PDF: <a href="resume.pdf">скачать</a>. По запросу могу прислать дополнительные билды и исходники.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="wrap">© <span id="y"></span> Имя Фамилия. Unity Developer.</div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="box" role="dialog" aria-modal="true" aria-label="Просмотр медиа">
+        <div class="frame" id="boxFrame"></div>
     </div>
 
-    <div class="project">
-      <h3>Physics Sandbox</h3>
-      <img src="projects/physics.gif" alt="physics demo">
-      <p>Продвинутая физика с Joint’ами и drag-interactable объектами.</p>
-      <a href="https://github.com/username/physics-sandbox">Исходники</a>
-    </div>
+    <script>
+        // Year
+        document.getElementById('y').textContent = new Date().getFullYear();
 
-  </section>
+        // Intersection reveal
+        const io = new IntersectionObserver((entries) => {
+            for (const e of entries) { if (e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target) } }
+        }, { threshold: 0.12 });
+        document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
 
-  <section>
-    <h2>Опыт</h2>
-    <p>2022-2025: Gameplay Programmer в XYZ Studio</p>
-  </section>
+        // Mouse shine + tilt on cards
+        function handleMove(e) {
+            const card = e.currentTarget;
+            const r = card.getBoundingClientRect();
+            const x = (e.clientX - r.left) / r.width;
+            const y = (e.clientY - r.top) / r.height;
+            card.style.setProperty('--mx', (x * 100) + '%');
+            const rx = (y - 0.5) * -6; // tilt limits
+            const ry = (x - 0.5) * 8;
+            card.style.transform = `translateY(-4px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+        }
+        function handleLeave(e) { e.currentTarget.style.transform = '' }
+        document.querySelectorAll('[data-tilt]').forEach(card => {
+            card.addEventListener('mousemove', handleMove);
+            card.addEventListener('mouseleave', handleLeave);
+        });
+
+        // Lightbox (videos or images)
+        const box = document.getElementById('box');
+        const frame = document.getElementById('boxFrame');
+        function openBox(src) {
+            frame.innerHTML = src.endsWith('.mp4') || src.endsWith('.webm')
+                ? `<video src="${src}" controls autoplay playsinline style="display:block; max-width:100%; max-height:86vh"></video>`
+                : `<img src="${src}" alt="media" style="display:block; max-width:100%; max-height:86vh"/>`;
+            box.classList.add('open');
+        }
+        window.openBox = openBox;
+        box.addEventListener('click', e => { if (e.target === box) box.classList.remove('open') });
+
+        // Click on thumbs opens lightbox
+        document.querySelectorAll('[data-lightbox]').forEach(t => {
+            t.addEventListener('click', () => openBox(t.getAttribute('data-lightbox')))
+        });
+
+        // Starfield background
+        const canvas = document.getElementById('stars');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
+        addEventListener('resize', resize); resize();
+        for (let i = 0; i < 140; i++) {
+            stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, z: Math.random() * 1.2 + 0.2, s: Math.random() * 1.5 + 0.2 });
+        }
+        function loop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (const st of stars) {
+                st.x += 0.1 * st.z; if (st.x > canvas.width) st.x = 0;
+                ctx.globalAlpha = 0.6 * st.z; ctx.fillStyle = '#fff';
+                ctx.fillRect(st.x, st.y, st.s, st.s);
+            }
+            requestAnimationFrame(loop);
+        }
+        loop();
+    </script>
 </body>
 </html>
