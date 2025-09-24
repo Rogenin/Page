@@ -1,34 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>My Resume</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 40px; }
-    h1 { color: #333; }
-    .section { margin-bottom: 20px; }
-  </style>
+  <title>Резюме Unity Developer</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>John Doe</h1>
-  <p>Email: john.doe@example.com | GitHub: <a href="https://github.com/username">username</a></p>
+  <header>
+    <h1>Иван Иванов</h1>
+    <p>Unity Developer | C# | Gameplay Programmer</p>
+    <a href="mailto:youremail@example.com">youremail@example.com</a> |
+    <a href="https://linkedin.com/in/username">LinkedIn</a> |
+    <a href="https://github.com/username">GitHub</a>
+  </header>
 
-  <div class="section">
-    <h2>About Me</h2>
-    <p>Brief description about yourself...</p>
-  </div>
-
-  <div class="section">
-    <h2>Experience</h2>
+  <section>
+    <h2>Навыки</h2>
     <ul>
-      <li>Company A – Position (2021–2023)</li>
-      <li>Company B – Position (2019–2021)</li>
+      <li>C#, Unity (URP, ECS, Input System)</li>
+      <li>AI, мультиплеер (Netcode)</li>
+      <li>Оптимизация, профилинг</li>
     </ul>
-  </div>
+  </section>
 
-  <div class="section">
-    <h2>Skills</h2>
-    <p>C#, Unity, WPF, Git, .NET</p>
-  </div>
+  <section>
+    <h2>Примеры проектов</h2>
+
+    <div class="project">
+      <h3>Rogue-like Prototype</h3>
+      <img src="projects/roguelike.gif" alt="roguelike demo">
+      <p>Система процедурных комнат, инвентарь и AI врагов.</p>
+      <a href="https://github.com/username/roguelike">Исходники</a>
+    </div>
+
+    <div class="project">
+      <h3>Physics Sandbox</h3>
+      <img src="projects/physics.gif" alt="physics demo">
+      <p>Продвинутая физика с Joint’ами и drag-interactable объектами.</p>
+      <a href="https://github.com/username/physics-sandbox">Исходники</a>
+    </div>
+
+  </section>
+
+  <section>
+    <h2>Опыт</h2>
+    <p>2022-2025: Gameplay Programmer в XYZ Studio</p>
+  </section>
 </body>
 </html>
